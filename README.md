@@ -1,6 +1,6 @@
 # Flutter Project : Weather App
 
-### What you can do with this repo ?
+### What can you contribute to this repo ?
 This is an app giving weather information. To contribute, you can add any functionality (e.g. UI updates, Maps API integration etc.) to it and make a pull request. There are no constrains on usage of widgets, external packages and APIs. 
 
 ### Steps to contribute
