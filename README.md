@@ -3,6 +3,9 @@
 ### What can you contribute to this repo ?
 This is an app giving weather information. To contribute, you can add any functionality (e.g. UI updates, Maps API integration etc.) to it and make a pull request. There are no constrains on usage of widgets, external packages and APIs. 
 
+### Initial view of app
+
+
 ### Steps to contribute
 1. Click on the fork button on the top right corner of this page.
 2. Now go to http://github.com/{your_username}/Flutter  where you can see your own fork of this repo.
