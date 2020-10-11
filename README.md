@@ -4,6 +4,7 @@
 This is an app giving weather information. To contribute, you can add any functionality (e.g. UI updates, Maps API integration etc.) to it and make a pull request. There are no constrains on usage of widgets, external packages and APIs. 
 
 ### Initial view of app
+(Hard coded values)
 
 ![alt text](screenshot.jpeg)
 
