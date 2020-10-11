@@ -5,6 +5,7 @@ This is an app giving weather information. To contribute, you can add any functi
 
 ### Initial view of app
 
+![alt text](screenshot.jpeg)
 
 ### Steps to contribute
 1. Click on the fork button on the top right corner of this page.
