@@ -1,112 +1,38 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weatherapp/blocs/weather_bloc.dart';
+import 'package:weatherapp/repositories/repositories.dart';
+import 'package:weatherapp/widgets/widgets.dart';
+import 'package:http/http.dart' as http;
+import 'package:weatherapp/simple_bloc_observer.dart';
 
 void main() {
-  runApp(MyApp());
+  Bloc.observer = SimpleBlocObserver();
+
+  final WeatherRepository weatherRepository = WeatherRepository(
+    weatherApiClient: WeatherApiClient(
+      httpClient: http.Client(),
+    ),
+  );
+
+  runApp(App(weatherRepository: weatherRepository));
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class App extends StatelessWidget {
+  final WeatherRepository weatherRepository;
+
+  App({Key key, @required this.weatherRepository})
+      : assert(weatherRepository != null),
+        super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+      title: 'Weather App',
+      home: BlocProvider(
+        create: (context) => WeatherBloc(weatherRepository: weatherRepository),
+        child: Weather(),
       ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  void getLocation()async{
-    Position position = await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    print('Printing $position');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage('assets/sky.jpg'))
-        ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 0,sigmaY: 0),
-          child: Scaffold(
-              backgroundColor: Colors.black.withOpacity(0.1),
-              body: Center(
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top:200),
-                        child: Text("25°C",style:TextStyle(color:Colors.white,fontSize: 50)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top:40),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(Icons.location_on,color: Colors.white,),
-                            Text("NYC,USA",style: TextStyle(color:Colors.white),)
-                          ],
-                        ),
-                      ),
-
-                      Padding(
-                          padding: EdgeInsets.only(top:200),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  // decoration: BoxDecoration(
-                                  //   border: Border.all(color: Colors.purple[600],width: 2),
-                                  //   borderRadius: BorderRadius.circular(25),
-                                  // ),
-                                    child: RaisedButton(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('Get Location',style:TextStyle(color:Colors.blue),),
-                                      onPressed: (){
-                                        getLocation();
-                                      },
-                                    )
-                                ),
-                              ),
-                              // Padding(
-                              //   padding: const EdgeInsets.all(8.0),
-                              //   child: Container(
-                              //     decoration: BoxDecoration(
-                              //       border: Border.all(color: Colors.blue[600],width: 2),
-                              //       borderRadius: BorderRadius.circular(25),
-                              //     ),
-                              //     child: Padding(
-                              //       padding: const EdgeInsets.all(8.0),
-                              //       child: Icon(Icons.wb_sunny,color:Colors.blue[600],size: 35,),
-                              //     )
-                              //   ),
-                              // ),
-
-
-
-                            ],
-                          )
-                      )
-                    ],
-                  )
-              )
-          ),
-        )
     );
   }
 }
